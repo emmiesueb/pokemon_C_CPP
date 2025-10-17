@@ -1,11 +1,12 @@
 #ifndef POKE327_H
-# define POKE327_H
+#define POKE327_H
 
 #include <iostream>
-# include <cstdlib>
-# include <cassert>
+#include <cstdint>
+#include <cstdlib>
+#include <cassert>
 
-# include "heap.h"
+#include "heap.h"
 #include "character.h"
 #include "pair.h"
 

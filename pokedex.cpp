@@ -1,4 +1,5 @@
 #include <iostream>
+#include <direct.h>
 #include <iomanip>
 #include <limits.h>
 #include <string>
@@ -94,12 +95,7 @@ Pokemon_Species::~Pokemon_Species() {
     free(identifier);
 }
 
-
-const char *HOME = getenv("HOME"); // grabs home directory
-const char *PATH = getenv("PATH"); // path directory for out of source-tree files
-const char *other_path1 = "/share/cs327/pokedex/pokedex/data/csv/";
-const char *other_path2 = "/.poke327/pokedex/pokedex/data/csv/";
-const char *other_path3 = "pokedex/pokedex/data/csv";
+const char *path = "/Assets/";
 
 std::vector<std::unique_ptr<Pokemon>> pokemon;
 std::vector<std::unique_ptr<Type_Names>> type_names;
@@ -672,24 +668,24 @@ static void (*csv_func[9])(FILE *) = {
 
 // open CSV files:
 void open_CSV(int type) {
+    char buffer[1024];
     FILE *f = NULL;
-    
-    char f1[strlen(files[type]) + strlen(other_path1) + 8];
-    sprintf(f1, "%s%s.csv", other_path1, files[type]);
-    f = fopen(f1, "rb");
 
-    // file failed to open, tell :
-    if (f == NULL) {
-        char f2[strlen(HOME) + strlen(files[type]) + strlen(other_path2) + 8];
-        sprintf(f2, "%s%s%s.csv", HOME, other_path2, files[type]);
-        f = fopen(f2, "rb");
+    // get current working directory:
+    if (_getcwd(buffer, 1024) != NULL) {
+        const char *CWD = buffer;
+        int size = strlen(files[type]) + strlen(path) + strlen(CWD);
+        char f1[size];
+        sprintf(f1, "%s%s%s.csv", CWD, path, files[type]);
+        f = fopen(f1, "rb");
+        // file failed to open, tell:
         if (f == NULL) {
-            char f3[strlen(other_path3) + strlen(files[type]) + 10];
-            sprintf(f3, "../%s%s.csv", other_path3, files[type]);
-            f = fopen(f3, "rb");
+            std::cerr << "File " << f1 << " does not exist. Exiting program.";
+            exit(1);
         }
-        return;
     }
+    else
+        std::cerr << "Could not get current working directory.";
 
     // parse through CSV file:
     csv_func[type](f);

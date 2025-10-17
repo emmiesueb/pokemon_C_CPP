@@ -1,19 +1,24 @@
 CC = gcc
 CXX = g++
 ECHO = echo
-RM = rm -f
+
+ifeq ($(OS),Windows_NT)
+	RM = del /Q
+else
+	RM = rm -f
+endif
 
 TERM = "S2024"
 
 CFLAGS = -Wall -Werror -ggdb -funroll-loops -DTERM=$(TERM)
 CXXFLAGS = -Wall -Werror -ggdb -funroll-loops -DTERM=$(TERM)
 
-LDFLAGS = -lncurses
+LDFLAGS = -lncursesw
 
 BIN = poke327
 OBJS = poke327.o heap.o io.o character.o pokedex.o battle.o
 
-all: $(BIN) etags
+all: $(BIN)
 
 $(BIN): $(OBJS)
 	@$(ECHO) Linking $@
@@ -33,12 +38,8 @@ $(BIN): $(OBJS)
 
 clean:
 	@$(ECHO) Removing all generated files
-	@$(RM) *.o $(BIN) *.d TAGS core vgcore.* gmon.out
+	@$(RM) *.o *.exe $(BIN) *.d TAGS core vgcore.* gmon.out
 
 clobber: clean
 	@$(ECHO) Removing backup files
 	@$(RM) *~ \#* *pgm
-
-etags:
-	@$(ECHO) Updating TAGS
-	@etags *.[ch]
