@@ -405,7 +405,7 @@ static void io_list_trainers()
         if (n > 6 && i < (n - 6))
           i++;
         break;
-      case '\e':
+      case 27:
         keypad(menu, FALSE);
         delwin(menu);
         menu = NULL;
@@ -468,7 +468,7 @@ int io_party_select(int type) {
       case 10:
         enter = 1;
         break;
-      case '\e':
+      case 27:
         break_loop = 1;
         break;
     }
@@ -634,7 +634,7 @@ void io_pcc() {
           io_display();
         }
         break;
-      case '\e':
+      case 27:
         exiting = 1;
         break;
     }
@@ -672,8 +672,8 @@ void handle_menu_input(int type, int cursor) {
     mvwaddch(win, 3, 35, ACS_LRCORNER);
     keypad(stdscr, TRUE);
     keypad(win, TRUE);
-    bool exiting = 0;
     int c;
+    bool exiting = 0;
     do {
       mvwhline(win, 1, 1, ' ', 34);
       mvwprintw(win, 1, 1, "How many?");
@@ -696,7 +696,8 @@ void handle_menu_input(int type, int cursor) {
           world.pc->bag[cursor]->num += amt;
           exiting = 1;
           break;
-        case '\e':
+        case 27:
+        case '>':
           exiting = 1;
           break;
       }
@@ -801,6 +802,7 @@ void io_building_menu(int type)
         break;
       // exit building:
       case '<':
+      case 27:
         keypad(menu, FALSE);
         delwin(menu);
         menu = NULL;
@@ -1032,7 +1034,7 @@ int io_battle_input(int scrn, int cursor, bool wild, Party_Member *self, Party_M
           cursor = 0;
           break;
         // for debugging
-        case '\e':
+        case 27:
           return 9;
         default:
           break;
@@ -1084,7 +1086,7 @@ int io_battle_input(int scrn, int cursor, bool wild, Party_Member *self, Party_M
           wrefresh(battle);
           sleep(1);
           break;
-        case '\e':
+        case 27:
           scrn = 0;
           cursor = 0;
           break;
@@ -1109,7 +1111,7 @@ int io_battle_input(int scrn, int cursor, bool wild, Party_Member *self, Party_M
             return 1;
           }
           break;
-        case '\e':
+        case 27:
           scrn = 0;
           cursor = 1;
           break;
@@ -1324,7 +1326,7 @@ int io_move_selection(Party_Member *p) {
       case KEY_DOWN:
         selected = min(3, selected + 1);
         break;
-      case '\e':
+      case 27:
         selected = -1;
       case 10:
         entered = 1;
@@ -2279,7 +2281,7 @@ void io_party_display() {
   i = 1;
   do {
     switch(c = getch()) {
-      case '\e':
+      case 27:
         i = 0;
         break;
       default:

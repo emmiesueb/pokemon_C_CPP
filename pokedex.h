@@ -25,6 +25,8 @@ class Pokemon {
         bool is_default;
         Pokemon(int pid, char *identity, int spid, int h, int w, int base_ex, int o, bool def);
 
+        // void format(int n) const;
+
         ~Pokemon();
 };
 
@@ -35,6 +37,8 @@ class Experience {
         int level;
         int experience;
         Experience(int g, int l, int ex);
+
+        // void format(int n) const;
 };
 
 
@@ -47,6 +51,8 @@ class Stats {
         int game_index;
         Stats(int sid, int dcid, char *identity, bool bonly, int gi);
 
+        // void format(int n) const;
+
         ~Stats();
 };
 
@@ -56,6 +62,8 @@ class Type_Names {
         int type_id;
         char *name;
         Type_Names(int tid, char *n);
+
+        // void format(int n) const;
 
         ~Type_Names();
 };
@@ -81,6 +89,8 @@ class Moves {
         Moves(int mid, char *identity, int gid, int tid, int po, int p, int acc, int pr, int trid, int8_t dcid,
             int effid, int effch, int ctid, int ceffid, int sceffid);
 
+        // void format(int n) const;
+
         ~Moves();
 };
 
@@ -91,6 +101,8 @@ class Pokemon_Types {
         int type_id;
         int slot;
         Pokemon_Types(int pid, int tid, int s);
+
+        // void format(int n) const;
 };
 
 
@@ -103,6 +115,8 @@ class Pokemon_Moves {
         int level;
         int order;
         Pokemon_Moves(int pid, int vgid, int mid, int pmmid, int l, int o);
+
+        // void format(int n) const;
 };
 
 
@@ -113,6 +127,8 @@ class Pokemon_Stats {
         int base_stat;
         int effort;
         Pokemon_Stats(int pid, int sid, int base_s, int eff);
+
+        // void format(int n) const;
 };
 
 
@@ -139,6 +155,8 @@ class Pokemon_Species {
         int conquest_order;
         Pokemon_Species(int pid, char* identity, int g, int e_from, int e_chain, int color, int shape, int habitat, int gender,
             int capture, int base_h, bool baby, int hatch, bool gender_diff, int gid, int forms, bool legend, bool mythical, int conquest);
+
+        // void format(int n) const;
 
         ~Pokemon_Species();
 };
