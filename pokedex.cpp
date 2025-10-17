@@ -25,6 +25,7 @@ Pokemon::~Pokemon() {
     free(identifier);
 }
 
+
 /* Experience : */
 Experience::Experience(int g, int l, int ex) : growth_rate_id(g), level(l), experience(ex) {}
 
@@ -35,10 +36,10 @@ Stats::Stats(int sid, int dcid, char *identity, bool bonly, int gi) : stat_id(si
     strcpy(identifier, identity);
 }
 
-
 Stats::~Stats() {
     free(identifier);
 }
+
 
 /* Type_Names : */ 
 Type_Names::Type_Names(int tid, char *n) : type_id(tid) {
@@ -46,10 +47,10 @@ Type_Names::Type_Names(int tid, char *n) : type_id(tid) {
     strcpy(name, n);
 }
 
-
 Type_Names::~Type_Names() {
     free(name);
 }
+
 
 /* Moves : */
 Moves::Moves(int mid, char *identity, int gid, int tid, int po, int p, int acc, int pr, int trid, int8_t dcid,
@@ -59,7 +60,6 @@ Moves::Moves(int mid, char *identity, int gid, int tid, int po, int p, int acc, 
                 identifier = (char *) malloc(strlen(identity) + 1);
                 strcpy(identifier, identity);
             }
-
 
 Moves::~Moves() {
     free(identifier);
@@ -95,7 +95,7 @@ Pokemon_Species::~Pokemon_Species() {
     free(identifier);
 }
 
-const char *path = "/Assets/";
+const char *path = "\\Assets\\";
 
 std::vector<std::unique_ptr<Pokemon>> pokemon;
 std::vector<std::unique_ptr<Type_Names>> type_names;
@@ -585,13 +585,13 @@ static void pokemon_moves_CSV(FILE *f) {
 
     while (1) {
         // order has a chance of being empty
-        buff = (char *) malloc(sizeof(char) * 20);
+        buff = (char *) malloc(sizeof(char) * 22);
         if (buff == NULL) {
             std::cerr << "malloc error" << endl;
             fclose(f);
             exit(1);
         }
-        parse_CSV(f, buff, 20);
+        parse_CSV(f, buff, 22);
         if (feof(f)) {
             free(buff);
             break;
@@ -601,8 +601,11 @@ static void pokemon_moves_CSV(FILE *f) {
             o = ((strcmp(words[5], "null")) ? INT_MAX : atoi(words[5]));
             pm = new Pokemon_Moves(atoi(words[0]), atoi(words[1]), atoi(words[2]), atoi(words[3]), atoi(words[4]), o);
             pokemon_moves.push_back(std::unique_ptr<Pokemon_Moves>(pm));
-            for (i = 0; words[i] != NULL; ++i)
-                free(words[i]);
+            for (i = 0; i < 6; i++) {
+                if (words[i] != NULL)
+                    free(words[i]);
+            }
+            free(words);
         }
         free(buff);
     }
@@ -644,8 +647,11 @@ static void pokemon_stats_CSV(FILE *f) {
         if ((words = tokenize(buff)) != NULL) {
             ps = new Pokemon_Stats(atoi(words[0]), atoi(words[1]), atoi(words[2]), atoi(words[3]));
             pokemon_stats.push_back(std::unique_ptr<Pokemon_Stats>(ps));
-            for (i = 0; words[i] != NULL; ++i)
-                free(words[i]);
+            for (i = 0; i < 4; i++) {
+                if (words[i] != NULL)
+                    free(words[i]);
+            }
+            free(words);
         }
         free(buff);
     }
@@ -680,12 +686,12 @@ void open_CSV(int type) {
         f = fopen(f1, "rb");
         // file failed to open, tell:
         if (f == NULL) {
-            std::cerr << "File " << f1 << " does not exist. Exiting program.";
+            std::cerr << "File " << f1 << " does not exist. Exiting program." << endl;
             exit(1);
         }
     }
     else
-        std::cerr << "Could not get current working directory.";
+        std::cerr << "Could not get current working directory." << endl;
 
     // parse through CSV file:
     csv_func[type](f);
