@@ -1,8 +1,8 @@
 # Pokémon in C/C++
-This project was completed for COM S 3270 at Iowa State University. A database from the ISU Pyrite server is pulled from to provide CSV files that are parsed before starting the game.
+This project was completed for COM S 3270 at Iowa State University. Project initially pulled from the IAState pyrite server's pokedex database, but now has an Assets folder containing various CSV files that get parsed before running the game. The original Makefile was also reconfigured to account for either a Unix or Windows system.
 
 ## How To Play
-To start, run `make clean` in order to clean up the workspace, then run `make` to generate the necessary object files. In the repository folder, after a call to `make`, you can then run the game with the `./pokemon327` command. It will take a moment to start up, as it is parsing through the CSV files pulled from database in the Pyrite server.
+To start, run `make clean` in order to clean up the workspace, then run `make` to generate the necessary object files. In the repository folder, after a call to `make`, you can then run the game with the `./pokemon327` command. It will take a moment to start up, as it is parsing through several large CSV files.
 <img width="1139" height="661" alt="image" src="https://github.com/user-attachments/assets/5b546fe9-f5d1-4d69-922c-f54dfab093b2" />
 
 A "game loop" has been implemented, where the PC has the top priority to move--this means the PC will always take its turn first, while NPCs will move after the PC has taken a turn. The PC is denoted by the `@` symbol. The currently generated map cell that the PC is in will be displayed in the bottom left in the format `#(E/W)x#(N/S)`.
