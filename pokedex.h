@@ -4,6 +4,7 @@
 #include <stdbool.h>
 #include <vector>
 #include <cstdlib>
+#include <cstdint>
 #include <cstdio>
 #include <cassert>
 #include <cstring>

@@ -1,6 +1,6 @@
 #include <iostream>
 #include <unistd.h>
-#include <ncurses.h>
+#include <ncurses/ncurses.h>
 #include <ctype.h>
 #include <stdlib.h>
 #include <limits.h>
